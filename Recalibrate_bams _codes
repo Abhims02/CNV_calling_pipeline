@@ -1,0 +1,102 @@
+BWA indexing the reference file:
+bwa index <.fasta file>
+
+
+Alignment:
+bwa mem \
+-K 100000000 \
+-Y \
+-R '@RG\tID:<sample>\tLB:<sample>\tPL:ILLUMINA\tPM:HISEQ\tSM:<sample>' \
+<ref.fa> \
+<sample.fq> \
+<sample.fq> \
+> <aligned_reads.sam>
+
+
+Mark duplicates and sort 
+gatk \        
+MarkDuplicatesSpark \
+        -I <.sam> \
+        -M <dedup_metrics.txt> \
+        -O <sorted_dedup_reads.bam>
+
+
+Collect Allignment metrics
+java -jar picard.jar \
+        CollectAlignmentSummaryMetrics \
+        R=<ref.fa> \
+        I=<sorted_dedup_reads.bam> \
+        O=<alignment_metrics.txt>
+
+
+Calling variants
+gatk HaplotypeCaller \
+        -R <ref.fa> \
+        -I <sorted_dedup_reads.bam> \
+        -o <raw_variants.vcf>
+
+
+Extracting SNP’s and Indels
+gatk SelectVariants \
+        -R <ref.fa> \
+        -V <raw_variants.vcf> \
+        -selectType SNP \
+        -o <raw_snps.vcf>
+
+gatk SelectVariants \
+        -R <ref.fa> \
+        -V <raw_variants.vcf> \
+        -selectType INDEL \
+        -o <raw_indels.vcf>
+ 
+ 
+Filtering SNP’s
+gatk VariantFiltration \
+        -R <ref.fa> \
+        -V <raw_snps.vcf> \
+        -O <filtered_snps.vcf> \
+        -filter-name "QD_filter" -filter "QD < 2.0" \
+        -filter-name "FS_filter" -filter "FS > 60.0" \
+        -filter-name "MQ_filter" -filter "MQ < 40.0" \
+        -filter-name "SOR_filter" -filter "SOR > 4.0" \
+        -filter-name "MQRankSum_filter" -filter "MQRankSum < -12.5" \
+        -filter-name "ReadPosRankSum_filter" -filter "ReadPosRankSum < -8.0"
+        
+
+Filtering Indels
+gatk VariantFiltration \
+        -R <ref.fa> \
+        -V <raw_indels.vcf> \
+        -O <filtered_indels.vcf> \
+        -filter-name "QD_filter" -filter "QD < 2.0" \
+        -filter-name "FS_filter" -filter "FS > 200.0" \
+        -filter-name "SOR_filter" -filter "SOR > 10.0"
+
+
+Excluding filters
+gatk SelectVariants \
+        --exclude-filtered \
+        -V <filtered_snps.vcf >\
+        -O <bqsr_snps.vcf>
+
+gatk SelectVariants \
+        --exclude-filtered \
+        -V <filtered_indels.vcf> \
+        -O <bqsr_indels.vcf>
+
+
+Base quality recalibration
+gatk BaseRecalibrator \
+        -R <ref.fa> \
+        -I <sorted_dedup_reads.bam> \
+        --known-sites <bqsr_snps.vcf> \
+        --known-sites <bqsr_indels.vcf> \
+        -O <recal_data.table>
+
+
+Applying the base recalibration
+gatk ApplyBQSR \
+        -R <ref.fa> \
+        -I <sorted_dedup_reads.bam> \
+        -bqsr <recal_data.table> \
+        -O <recal_reads.bam> \
