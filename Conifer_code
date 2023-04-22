@@ -1,1 +1,38 @@
+(This code is meant for python v2.7)
+For running it on python v3.8 and above refer to: https://github.com/shwetaramdas/conifer_python3 
 
+
+Creating a probes file
+Refer to Krumm et.al., http://sourceforge.net/projects/conifer/files/probes.txt/download to look at a sample probes file
+
+
+Creating RPKM files
+python conifer.py rpkm \
+	--probes probes.txt \
+	--input sample.bam \
+	--output RPKM/sample.rpkm.txt
+
+
+The analysis step of conifer
+python conifer.py analyze \
+  	--probes probes.txt \
+  	--rpkm_dir ./RPKM/ \
+  	--output analysis.hdf5 \
+  	--svd 6 \
+  	--write_svals singular_values.txt \
+  	--plot_scree screeplot.png \
+  	--write_sd sd_values.txt
+    
+    
+Making CNV calls using Conifer
+python conifer.py call \
+  	--input analysis.hdf5 \
+  	--output calls.txt
+    
+
+Plotting called CNV
+python conifer.py plot \
+  	--input analysis.hdf5 \
+  	--region chr#:start-stop \
+  	--output image.png \
+  	--sample sampleID
