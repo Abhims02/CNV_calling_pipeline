@@ -100,3 +100,7 @@ gatk ApplyBQSR \
         -I <sorted_dedup_reads.bam> \
         -bqsr <recal_data.table> \
         -O <recal_reads.bam> \
+        
+       
+These codes were obtained from the variant calling pipeline using GATK4
+source:https://gencore.bio.nyu.edu/variant-calling-pipeline-gatk4/ 
