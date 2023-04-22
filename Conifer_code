@@ -36,3 +36,7 @@ python conifer.py plot \
   	--region chr#:start-stop \
   	--output image.png \
   	--sample sampleID
+	
+
+These codes are accessible at:https://conifer.sourceforge.net/tutorial.html
+(Krumm et.al,2012)
