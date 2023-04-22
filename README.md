@@ -24,3 +24,11 @@ For CNV calling using XHMM we used the official pipeline by (Fromer and Purcell,
 link: https://zzz.bwh.harvard.edu/xhmm/tutorial.shtml 
 Download XHMM from offical site: https://zzz.bwh.harvard.edu/xhmm/download.shtml
 For codes refer: XHMM_code
+
+
+##Samplot
+For visualization of calls we used Samplot by (Belyeu, et.al., 2021)
+link for downloading and tutorial: https://github.com/ryanlayer/samplot
+Download biocond to run samplot: http://www.ddocent.com//bioconda/ 
+For codes refer: samplot_codes
+
