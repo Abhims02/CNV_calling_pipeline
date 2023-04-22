@@ -1,1 +1,10 @@
-
+time samplot plot \
+    -n NA12878 NA12889 NA12890 \
+    -b samplot/test/data/NA12878_restricted.bam \
+      samplot/test/data/NA12889_restricted.bam \
+      samplot/test/data/NA12890_restricted.bam \
+    -o 4_115928726_115931880.png \
+    -c chr4 \
+    -s 115928726 \
+    -e 115931880 \
+    -t DEL
