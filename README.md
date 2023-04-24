@@ -34,3 +34,6 @@ For codes refer: samplot_codes
 
 ##R_codes
 All the steps in the pipeline have been automated for all the samples using R and the codes for each step is uploaded in the R_codes folder.
+
+##Honours_analysis
+This folder contains all the analysis done in the project. Along with the csv data files on which analysis was done and R-script written for analysis
