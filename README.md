@@ -32,3 +32,5 @@ link for downloading and tutorial: https://github.com/ryanlayer/samplot
 Download biocond to run samplot: http://www.ddocent.com//bioconda/ 
 For codes refer: samplot_codes
 
+##R_codes
+All the steps in the gatk pipeline to obtain recalibrated bam files have been automated for all the samples using R and the codes for each step is uploaded in the R_codes folder.
