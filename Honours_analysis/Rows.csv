@@ -1,0 +1,4 @@
+id,name,gene-id,gene-symbol,gene-name,entrez-id,chromosome,start-position,end-position
+1102350,"ENSG00000183506",119554,"PI4KAP2","phosphatidylinositol 4-kinase, catalytic, alpha pseudogene 2",375133,"22","n/a","n/a"
+1109016,"ENSG00000241973",5265,"PI4KA","phosphatidylinositol 4-kinase, catalytic, alpha",5297,"22","n/a","n/a"
+279740896,"ENSG00000215513",180884,"PI4KAP1","phosphatidylinositol 4-kinase, catalytic, alpha pseudogene 1",728233,"22","n/a","n/a"
